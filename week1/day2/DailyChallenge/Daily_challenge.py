@@ -23,15 +23,15 @@
 # ob = Solution()
 # print(ob.solve(users_string))
 
-# input = "ppoeemm"
-# answer = input[0] 
-# i = 0
-# j = 1 
-# while j<len(input):
-#     if input[j] == input[i]:
-#         j = j+1
-#         continue
-#     answer = answer + input[j]
-#     i = i+1
-#     j = j+1
-# print(answer)    
+input = "ttttiiiittttlllleee"
+answer = input[0] 
+i = 0
+j = 1 
+while j<len(input):
+    if input[j] == answer[i]:
+        j = j+1
+        continue
+    answer = answer + input[j]
+    i = i+1
+    j = j+1
+print(answer)    
