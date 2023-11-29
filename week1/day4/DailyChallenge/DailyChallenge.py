@@ -9,16 +9,15 @@ matrix = [
     "^r!"
 ]
 
-def decrypt_matrix(matrix):
-    alpha_chars = [''] * len(matrix[0])
-    for col in range(len(matrix[0])):
-        for row in range(len(matrix)):
-            if matrix[row][col].isalpha():
-                alpha_chars[col] += matrix[row][col]
+mat = ''.join(matrix)
 
-    decoded_message = ' '.join(alpha_chars)
-    
-    return decoded_message
-
-decoded_message = decrypt_matrix(matrix)
-print(decoded_message)
+num_of_columns = len(matrix[0])
+def calc_index(row, col):
+    return col * num_of_columns + row
+alpha_chars = []
+for row in range(num_of_columns):
+    for column in range(len(matrix)):
+        index = calc_index(row, column)
+        if mat[index].isalpha() or mat[index] == ' ':
+            alpha_chars.append(mat[index])
+print(''.join(alpha_chars))
