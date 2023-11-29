@@ -1,4 +1,4 @@
-#1
+# 1
 # word = input("Enter a word: ")
 # letter_indexes = {}
 # for index, letter in enumerate(word):
@@ -10,7 +10,7 @@
 # print("Dictionary storing indexes of each letter:")
 # print(letter_indexes)
 
-#2
+# 2
 # items_purchase = {
 #   "Water": "$1",
 #   "Bread": "$3",
@@ -42,12 +42,10 @@
 
 # wallet = "$100" 
 # def items_you_can_afford(items_purchase, wallet):
-#     wallet_amount = int(wallet.replace('$', '').replace(',', ''))  # Convert wallet amount to integer
-    
-#     # Filter affordable items based on wallet amount
+#     wallet_amount = int(wallet.replace('$', '').replace(',', ''))  
+
 #     affordable_items = [item for item, price in items_purchase.items() if int(price.replace('$', '').replace(',', '')) <= wallet_amount]
     
-#     # Sort the affordable items alphabetically
 #     affordable_items.sort()
     
 #     return affordable_items
