@@ -1,19 +1,3 @@
-# board = [
-#     ['col','col','col'
-#     'col','col','col'
-#      'col','col','col' ]
-# ]
-
-# def display_board(board):
-#     print( '___' + board[0],[0] + '|' + '___ ' + board[0],[1] + '|' + '___ ' + board[0],[2] + '|'
-#           '___ ' + board[1],[0] + '|'+ '___ ' + board[1],[1] + '|' + '___ ' + board[1],[2] + '|'
-#           '___ ' + board[2],[0] + '|'+ '___ ' + board[2],[1] + '|' + '___ ' + board[2],[2] + '|')
-# display_board(board)    
-
-
-# position = int(input('choose position (1 - 9): '))
-# board[0][position-1] = 'X'
-# print(board)    
 
 def display_board(board):
     for row in board:
