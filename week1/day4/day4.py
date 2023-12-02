@@ -165,11 +165,11 @@
 
 
 #ARGS AND KWARGS
-def print_names (*args):
-    for i in args:
-        print(i)
-# args = *        
-print_names ('David','Anna','Nastya')    
+# def print_names (*args):
+#     for i in args:
+#         print(i)
+# # args = *        
+# print_names ('David','Anna','Nastya')    
 
 
 # KWARGS = *  KEY WORD ARGUEMENT (** key and value)
@@ -188,18 +188,45 @@ print_names ('David','Anna','Nastya')
 
 #FUNCTION INSIDE FUNCTION
 
-def country_info(country):
+# def country_info(country):
     
-    if country == 'Israel':
-        population = 9364000
-        capital = 'Jerusalem'
-        squared_pop = square(population)
-    if country == 'Ukraine':
-        population = 14340000
-        capital = 'Kuiv'
-    if country == 'Brazil':
-        population = 214300000
-        capital = 'brazilia'
-    return population,squared_pop, capital 
-pop, squ = country_info('Israel')       
-print(f'The population is {a} and the cap is {b}')
+#     if country == 'Israel':
+#         population = 9364000
+#         capital = 'Jerusalem'
+#         squared_pop = square(population)
+#     if country == 'Ukraine':
+#         population = 14340000
+#         capital = 'Kuiv'
+#     if country == 'Brazil':
+#         population = 214300000
+#         capital = 'brazilia'
+#     return population,squared_pop, capital 
+# pop, squ = country_info('Israel')       
+# print(f'The population is {a} and the cap is {b}')
+
+#LAMBDA
+def upper_s(strings_enter):
+    after_upper = []
+    for string in strins_enter:
+        string = string.upper()
+        after_upper.append(string)
+
+my_function = lambda s: s.upper()
+print()
+
+fruit =['Apple','Banana','Pear','Appricot','Orange']
+
+map_result = map(lambda s: s.upper(), fruit)
+# print(list(map_result))
+# print(tuple(map_result))
+
+
+print(dict(zip(map_result, fruit )))
+
+filter_object = filter(lambda s: s[0] == 'A', fruit)
+print(list(filter_object))
+
+from functools import reduce
+nums = [1,2,5,8,7,9,10]
+redused = reduce(lambda n1, n2 : n1+n2, nums)
+print(redused)
