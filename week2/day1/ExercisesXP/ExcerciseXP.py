@@ -1,18 +1,18 @@
 #1
-# class Cat:
-#     def __init__(self, cat_name, cat_age):
-#         self.name = cat_name
-#         self.age = cat_age
+class Cat:
+    def __init__(self, cat_name, cat_age):
+        self.name = cat_name
+        self.age = cat_age
 
-# cat1 = Cat('Murka',3)
-# cat2 = Cat('Sandra',10)
-# cat3 = Cat('Richy',5)
+cat1 = Cat('Murka',3)
+cat2 = Cat('Sandra',10)
+cat3 = Cat('Richy',5)
 
-# def oldest_cat(*cats):
-#     max_value = max(cats, key =lambda cat: cat.age)
-#     return max_value
-# oldest_cat = oldest_cat(cat1,cat2,cat3)
-# print(f'The oldest cat is {oldest_cat.name}, and is {oldest_cat.age} years old.')
+def oldest_cat(*cats):
+    max_value = max(cats, key =lambda cat: cat.age)
+    return max_value
+oldest_cat = oldest_cat(cat1,cat2,cat3)
+print(f'The oldest cat is {oldest_cat.name}, and is {oldest_cat.age} years old.')
 
 #2
 # class Dog:
