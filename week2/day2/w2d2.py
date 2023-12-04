@@ -90,40 +90,40 @@
 # blocked_Door.open_door()
 
 
-class AtmAccount:
-    available_acc_num = 2000
-    def __init__(self, holder) -> None:
-        self.__holder = holder #private 
-        self.__account_num = AtmAccount.available_acc_num
-        self.__balance = 0
-        AtmAccount.available_acc_num += 1
+# class AtmAccount:
+#     available_acc_num = 2000
+#     def __init__(self, holder) -> None:
+#         self.__holder = holder #private 
+#         self.__account_num = AtmAccount.available_acc_num
+#         self.__balance = 0
+#         AtmAccount.available_acc_num += 1
 
-    @property   
-    def balance(self):
-        return self.__balance #i'm giving an access 
+#     @property   
+#     def balance(self):
+#         return self.__balance #i'm giving an access 
     
-    @balance.setter
-    def balance(self, amount): #i'm giving permition to change smth inside
-        self.__balance = amount
+#     @balance.setter
+#     def balance(self, amount): #i'm giving permition to change smth inside
+#         self.__balance = amount
 
-    def deposit(self,amount):
-        self.__balance += amount
-        return self.balance
+#     def deposit(self,amount):
+#         self.__balance += amount
+#         return self.balance
 
-    def withdraw(self, amount):
-        if amount > self.balance:
-            raise ValueError('Insufficient balance')
-        else:
-            self.balance -= amount  
+#     def withdraw(self, amount):
+#         if amount > self.balance:
+#             raise ValueError('Insufficient balance')
+#         else:
+#             self.balance -= amount  
 
-account1 = AtmAccount('Anastasia S.')
-account2 = AtmAccount('John P.')
-account3 = AtmAccount('Leo DiCaprio.')
+# account1 = AtmAccount('Anastasia S.')
+# account2 = AtmAccount('John P.')
+# account3 = AtmAccount('Leo DiCaprio.')
 
-print(account1._AtmAccount__account_num)
-print(account2._AtmAccount__account_num)
-print(account3._AtmAccount__account_num)
+# print(account1._AtmAccount__account_num)
+# print(account2._AtmAccount__account_num)
+# print(account3._AtmAccount__account_num)
 
-account1.deposit(200)
-account1.withdraw(500)
-print(account1.balance)
+# account1.deposit(200)
+# account1.withdraw(500)
+# print(account1.balance)
