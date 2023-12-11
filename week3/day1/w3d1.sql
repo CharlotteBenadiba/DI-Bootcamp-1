@@ -28,12 +28,12 @@ DELETE FROM products WHERE user_id = 1
 --price integer not null
 -- desc varchar 1000
 
--- CREATE TABLE products(
--- 	user_id serial PRIMARY KEY,
--- 	username varchar (255) NOT NULL,
--- 	price integer NOT NULL,
--- 	description varchar(1000)
--- 	)
+CREATE TABLE products(
+	user_id serial PRIMARY KEY,
+	username varchar (255) NOT NULL,
+	price integer NOT NULL,
+	description varchar(1000)
+	)
 
 
 -- CREATE TABLE accounts (
