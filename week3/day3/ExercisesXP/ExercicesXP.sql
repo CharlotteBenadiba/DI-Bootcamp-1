@@ -1,0 +1,137 @@
+-- --Ex.1 
+-- CREATE TABLE languages (
+-- 	language_id serial PRIMARY KEY,
+--     language_name VARCHAR(50) UNIQUE
+-- );
+
+-- INSERT INTO languages (language_name) VALUES
+-- ('English'),
+-- ('Spanish'),
+-- ('French'),
+-- ('Ukrainian'),
+-- ('Hebrew');
+-- SELECT * FROM languages;
+
+-- CREATE TABLE films (
+--     film_id serial PRIMARY KEY,
+--     title VARCHAR(100),
+--     description TEXT,
+--     language_id INT,
+--     FOREIGN KEY (language_id) REFERENCES languages(language_id)
+-- );
+-- SELECT * FROM films
+
+-- INSERT INTO films (title, description,language_id) VALUES
+-- ('Film1', 'Desc to film 1', 1),
+-- ('Film2', 'Desc to film 2', 2),
+-- ('Film3', 'Desc to film 3', 3),
+-- ('Film4', 'Desc to film 4', 4),
+-- ('Film5', 'Desc to film 5', 4);
+
+-- --2--
+-- SELECT films.title, films.description, languages.language_name AS language_name
+-- FROM films
+-- JOIN languages ON films.language_id = languages.language_id;
+-- --3--
+-- SELECT films.title, films.description, languages.language_name AS language_name
+-- FROM languages
+-- LEFT JOIN films ON films.language_id = languages.language_id;
+-- --4--
+-- CREATE TABLE new_film (
+--     id serial PRIMARY KEY,
+--     name VARCHAR(255)
+-- );
+
+-- INSERT INTO new_film (name) VALUES
+-- ('Film 6'),
+-- ('Film 7');
+
+-- --5--
+-- CREATE TABLE customer_review(
+-- 	review_id serial PRIMARY KEY,
+-- 	film_id INT REFERENCES new_film(id) ON DELETE CASCADE,
+-- 	language_id INT REFERENCES languages(language_id),
+-- 	title VARCHAR(255),
+-- 	score INT CHECK (score >= 1 AND score <= 10),
+-- 	review_text TEXT,
+-- 	last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+-- --6--
+-- INSERT INTO customer_review (film_id, language_id, title, score, review_text)
+-- VALUES 
+-- (1, 1, 'Great Movie!', 9, 'This film was amazing.'),
+-- (2, 2, 'Excellent Film', 8, 'Enjoyed very much.');
+
+-- --7--
+-- DELETE FROM new_film WHERE id = 1;
+-- --if we delete in perent record, it will automatically delete from child record, because of ON DELETE CASCADE
+
+-- --Ex. 2.
+-- --1--
+-- UPDATE films SET language_id = 3 WHERE film_id IN (1, 2);
+-- SELECT * FROM films;
+-- --2--
+-- SELECT * FROM customer;
+-- --The foreign keys in a customer table might include references to tables such as:
+-- --store_id referencing a store table with information about different stores.
+-- --address_id referencing an address table storing customer addresses.
+-- --The presence of a foreign key affects the way data is inserted into the customers table in the following ways:Valid Foreign Key Values and Referential Integrity.
+-- --3--
+-- DROP TABLE customer_review;
+-- --It need extra checking, because it lead to data loss, dependencies (it might cause errors in those dependent objects) and permissions(if the user has the permission to delete)
+-- --To minimize rasks we need to backup data and check defendencies.
+
+-- --4--
+-- SELECT * FROM rental
+
+-- SELECT COUNT(*) AS outstanding_rentals FROM rental
+-- WHERE return_date IS NULL;
+
+-- --5--
+-- SELECT film.title, film.rental_rate, payment.amount
+-- FROM film
+-- JOIN inventory ON film.film_id = inventory.film_id
+-- JOIN rental ON inventory.inventory_id = rental.inventory_id
+-- JOIN payment ON rental.rental_id = payment.rental_id
+-- WHERE rental.return_date IS NULL
+-- ORDER BY payment.amount DESC
+-- LIMIT 30;
+
+-- --6--
+-- --1 film
+-- SELECT *
+-- FROM film
+-- WHERE description ILIKE '%sumo wrestler%'
+--   AND film_id IN (
+--     SELECT film_id
+--     FROM film_actor
+--     WHERE actor_id = (
+--       SELECT actor_id
+--       FROM actor
+--       WHERE first_name = 'Penelope' AND last_name = 'Monroe'
+--     )
+--   );
+-- --2 film  
+-- SELECT * FROM film
+-- WHERE description ILIKE '%documentary%'
+-- 	AND length < 60
+--   AND rating = 'R';  
+-- --3 film  
+-- SELECT film.*
+-- FROM film
+-- JOIN inventory ON film.film_id = inventory.film_id
+-- JOIN rental ON inventory.inventory_id = rental.inventory_id
+-- JOIN payment ON rental.rental_id = payment.rental_id
+-- JOIN customer ON rental.customer_id = customer.customer_id
+-- WHERE payment.amount > 4.00
+--   AND customer.first_name = 'Matthew' AND customer.last_name = 'Mahan'
+--   AND rental.return_date >= '2005-07-28' AND rental.return_date <= '2005-08-01';  
+-- --4 film
+-- SELECT film.*
+-- FROM film
+-- JOIN inventory ON film.film_id = inventory.film_id
+-- JOIN rental ON inventory.inventory_id = rental.inventory_id
+-- JOIN customer ON rental.customer_id = customer.customer_id
+-- WHERE (film.title ILIKE '%boat%' OR film.description ILIKE '%boat%')
+--   AND customer.first_name = 'Matthew' AND customer.last_name = 'Mahan'
+-- ORDER BY film.replacement_cost DESC;
