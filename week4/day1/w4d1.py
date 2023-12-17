@@ -70,13 +70,14 @@
 
 # length = len('this str')
 
-def sum(num1:int, num2:int):
-    result = num1+num2
-    return result
+# def sum(num1:int, num2:int):
+#     result = num1+num2
+#     return result
 
-res = sum(45,68)
-print(res)
+# res = sum(45,68)
+# print(res)
 
-result2 = res + 9 
-result2 = sum(res,9)
-print(result2)
+# result2 = res + 9 
+# result2 = sum(res,9)
+# print(result2)
+

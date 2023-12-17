@@ -1,4 +1,4 @@
-from Mission_matcher import MissionMatcher
+from mission_matcher import MissionMatcher
 from volunteer_repository import DataRepository
 from volunteer_repository import Location
 from volunteer_repository import Mission
@@ -14,7 +14,7 @@ class SystemRunner:
         user_age = int(input("Please enter your age: "))
         return user_age
   
-    def get_district(self,locations: list[Location]):
+    def get_district(self,locations: list[Location]) -> str:
         index = 1
         print("Select your preferred area of volunteering:")
         
@@ -30,7 +30,7 @@ class SystemRunner:
                 return None
         return dist_list[dist_choice]
     
-    def match_profession(self):
+    def match_profession(self) -> list[int]:
         professions = {
             "Doctor": [4, 10],  # Map professions to corresponding mission IDs
             "Vet":[24,27,29,30],
@@ -48,7 +48,7 @@ class SystemRunner:
         lowercase_keys = {key.lower(): value for key, value in professions.items()}
         if user_profession in lowercase_keys:
             return lowercase_keys[user_profession]
-        return ''
+        return []
     
     def match_car_needed(self):
         user_has_car = input("Do you have a car? (yes/no): ").lower()
@@ -56,7 +56,7 @@ class SystemRunner:
              return True
         return False
     
-    def preferred_volunteering_area(self):
+    def preferred_volunteering_area(self) -> tuple[str, list[int]]:
         print("Select your preferred area of volunteering:")
         print("1. Medical Support and Aid")
         print("2. Psychological assistance and trainings")
@@ -96,7 +96,7 @@ class SystemRunner:
                 print("Please enter a valid number.")
     
     
-    def match_skills(self):
+    def match_skills(self) -> tuple[str, list[int]]:
         print("Please indicate if you possess any of the following skills:")
         print("1. Communication skills")
         print("2. Foreign languages")
@@ -104,6 +104,7 @@ class SystemRunner:
         print("4. Communication with animals")
         print("5. Communication with children")
         print("6. Conduct trainings")
+        print("7. No specific skills")
 
         skills = {
             "Communication": [8,9,17,16,18],  # Mapping skills to corresponding mission IDs
@@ -111,19 +112,20 @@ class SystemRunner:
             "Cooking": [2],
             "Communication with animals": [29, 30],
             "Communication with children":[5,14],
-            "Conduct trainings":[18]
+            "Conduct trainings":[18],
+            "No specific skills":[]
         }
 
         while True:
             try:
                 skill_choice = int(input("Enter the number corresponding to your skill (1-6) or 0 if none of the above: "))
                 if skill_choice == 0:
-                    return ''
-                elif 1 <= skill_choice <= 6:
+                    return ('', [])
+                elif 1 <= skill_choice <= 7:
                     selected_skill = list(skills.keys())[skill_choice - 1]
                     return selected_skill, skills[selected_skill]
                 else:
-                    print("Please enter a number between 1 and 6 or 0 to stop.")
+                    print("Please enter a number between 1 and 7 or 0 to stop.")
             except ValueError:
                 print("Please enter a valid number.")
     
@@ -156,7 +158,7 @@ class SystemRunner:
                 else:
                     print("Please enter a number between 1 and 7.")
             except ValueError:
-                print("Please enter a valid number.")    
+                print("Please enter a valid number.")  
       
 
     def run(self):
@@ -171,17 +173,70 @@ class SystemRunner:
         # print(branch)
 
         age = self.get_age()
-        prof = self.match_profession()
-        print(prof)
-        area = self.preferred_volunteering_area()
-        print(area)
-        skills = self.match_skills()
-        print(skills)
-        car = self.match_car_needed()
-        time = self.match_preferred_time()
         r = matcher.validate_age(age)
+        mission_id_list_proffesion = self.match_profession()
+        print(mission_id_list_proffesion)
+        mission_id_list_area = self.preferred_volunteering_area()[1]
+        print(mission_id_list_area)
+        mission_id_skills = self.match_skills()[1]
+        print(mission_id_skills)
+        has_car = self.match_car_needed()
+        time = self.match_preferred_time() 
+        print(time)       
         district = self.get_district(locations)
         print(district)
+        
+        mission_id_by_time = [element.mission_id for element in data.get_missions_by_vol_time(time)]
+        print(mission_id_by_time)
+        location_id_by_district = data.get_location_by_district(district)
+        print(location_id_by_district)
+        mission_set = matcher.build_mission_list(mission_id_list_proffesion, 
+                                   mission_id_list_area, 
+                                   mission_id_skills, 
+                                   mission_id_by_time)
+        location_set = matcher.build_location(district, locations)
+        
+        result = matcher.get_relevant_missions(mission_set, location_set, has_car)
+        print(f"total missions {len(result)}")
+        for i in result:
+            print(f"{i.mission_id},{i.mission} {i.mission_description}")
+
+    # def add_volunteer(self, first_name, last_name, phone, mission_id, mission):
+    #     conn = psycopg2.connect(
+    #         dbname  ='Volunteer_Matching_System',
+    #         user ='postgres',
+    #         host = 'localhost',
+    #         port ='5432'
+    #     )
+    #     cursor = conn.cursor()
+    #     try:
+    #         cursor.execute(
+    #             'INSERT INTO Volunteers (first_name, last_name, phone, mission_id, mission) VALUES (%s, %s, %s, %s, %s)',
+    #             (first_name, last_name, phone, mission_id, mission)
+    #         )
+    #         conn.commit()
+    #         print("Volunteer information inserted successfully!")
+    #     except psycopg2.Error as e:
+    #         conn.rollback()
+    #         print("Error inserting volunteer information:", e)
+    #     finally:
+    #         cursor.close()
+    #         conn.close()
+    # def ask_volunteering(self, missions):
+    #     for mission in missions:
+    #         answer = input(f"Would you like to volunteer for one of these missions? (yes/no): ").lower()
+    #         if answer == "yes":
+    #             mission_id = input("Enter the ID of the mission you choose: ")
+    #             name = input("Enter your first name: ")
+    #             last_name = input("Enter your last name: ")
+    #             phone = input("Enter your phone number: ")
+    #         elif answer == "no":
+    #             break
+    #         else:
+    #             print("Please answer with 'yes' or 'no'.")    
+    # ask = SystemRunner()                                        
+    # ask.ask_volunteering(missions)
+    # ask.add_volunteer(missions)
 
 
 r = SystemRunner()
