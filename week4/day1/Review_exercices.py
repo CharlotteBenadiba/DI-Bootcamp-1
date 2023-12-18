@@ -14,7 +14,8 @@
 #3
 # names = ['Alice','Max','David','Anastasia']
 # print(names[::2])
-#4
+#4  
+##########Almost correct. The insert method is used correctly, but it should use -2 instead of -1 to insert the number second from the end, not at the end.
 # my_numbers = [1,2,3,4,5]
 # user_numbers = int(input('Enter your number:'))
 # my_numbers.insert(-1,user_numbers)
@@ -29,6 +30,7 @@
 # }
 # print(my_data)
 #6
+########## Almost correct. The condition checks if the alcohol level is greater than 0.5%, but the text says "less than 0.5%". It should be if alc_level >= 0.5: to match the instruction.
 # alc_level = float(input('Please enter your blood alcohol level'))
 # if alc_level >0.5 :
 #     print(' A user is allowed to drive home if their blood alcohol is less than 0.5 %. Please take a cab')
